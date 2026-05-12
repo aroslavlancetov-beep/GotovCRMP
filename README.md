@@ -1,10 +1,10 @@
-[______________________ (4).sql](https://github.com/user-attachments/files/27473018/______________________.4.sql)
+[______________________ (2).sql](https://github.com/user-attachments/files/27623122/______________________.2.sql)
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 07 2026 г., 12:12
+-- Время создания: Май 12 2026 г., 09:11
 -- Версия сервера: 5.7.39
 -- Версия PHP: 8.1.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `кунтскамера`
+-- База данных: `Кунтскамера`
 --
 
 -- --------------------------------------------------------
@@ -59,17 +59,18 @@ CREATE TABLE `names` (
   `object_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `discovery_date` date DEFAULT NULL,
-  `descriptions` text COLLATE utf8mb4_unicode_ci
+  `descriptions` int(11) DEFAULT NULL COMMENT 'Ссылка на id в таблице dangers (уровень опасности)',
+  `skill_id` int(11) DEFAULT NULL COMMENT 'Ссылка на id в таблице skills (навык персонажа)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `names`
 --
 
-INSERT INTO `names` (`id`, `object_name`, `alias`, `discovery_date`, `descriptions`) VALUES
-(1, 'Volodya_Hokage', 'adamKilla', '2012-05-20', '1'),
-(2, 'Мент_Бенджамин', 'Боевыые_малыши', '2025-05-20', '8'),
-(3, 'Oper_Maga', 'ⓈⒺⓋⒶⓈⓉⓄⓅⓄⓁ', '2021-12-21', '4');
+INSERT INTO `names` (`id`, `object_name`, `alias`, `discovery_date`, `descriptions`, `skill_id`) VALUES
+(1, 'Volodya_Hokage', 'adamKilla', '2012-05-20', 1, 1),
+(2, 'Мент_Бенджамин', 'Боевыые_малыши', '2025-05-20', 8, 7),
+(3, 'Oper_Maga', 'ⓈⒺⓋⒶⓈⓉⓄⓅⓄⓁ', '2021-12-21', 4, 5);
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,7 @@ INSERT INTO `skills` (`id`, `skill_name`, `effect_description`, `activation_cond
 (1, 'лень', 'просто ленивый человек', 'лень действует на протяжении всей жини', 'попробуйте его развеселить, лень отступит мгновенно'),
 (2, 'образование', 'у человека развит интеллект', 'во время повседневного разговора или спора двух сторон', 'физическая сила'),
 (3, 'бой без правил', 'высоко развита способность боя', 'очень коротковременно, но может длиться в зависимости от соперника', 'против него можно задействовать метод любой грубой силы'),
-(4, ' доступ к вооружению', 'при малейшем намеке на угрозу использует свои связи', 'длится около месяца', 'вам помогут только более влиятельные люди'),
+(4, 'доступ к вооружению', 'при малейшем намеке на угрозу использует свои связи', 'длится около месяца', 'вам помогут только более влиятельные люди'),
 (5, 'угрозы и хулиганство', 'у него нет разума но есть сила', 'до первой заявы и пожизненного срока', 'попробуйте написать заявление в полицию'),
 (6, 'зависимость', 'такое нельзя обсуждать', 'на протяжении всей жизни', 'рехаб может помочь (это не толчная инфомация)'),
 (7, 'борьба с преступностью', 'уничтожает плохих парней', 'с момента его рождения', 'против него могут бать только лютые оффники');
@@ -131,7 +132,9 @@ ALTER TABLE `dangers`
 -- Индексы таблицы `names`
 --
 ALTER TABLE `names`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `descriptions` (`descriptions`),
+  ADD KEY `skill_id` (`skill_id`);
 
 --
 -- Индексы таблицы `positions`
@@ -146,32 +149,15 @@ ALTER TABLE `skills`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `dangers`
---
-ALTER TABLE `dangers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT для таблицы `names`
+-- Ограничения внешнего ключа таблицы `names`
 --
 ALTER TABLE `names`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT для таблицы `positions`
---
-ALTER TABLE `positions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT для таблицы `skills`
---
-ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  ADD CONSTRAINT `names_ibfk_1` FOREIGN KEY (`descriptions`) REFERENCES `dangers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `names_ibfk_2` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
