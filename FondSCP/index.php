@@ -5,7 +5,11 @@ require_once 'config.php';
 $names = [];
 
 try {
-    $sql = "SELECT * FROM names ORDER BY id";
+    $sql = "SELECT n.*, d.class_name as danger_name, s.skill_name as skill_name 
+            FROM names n
+            LEFT JOIN dangers d ON n.descriptions = d.id
+            LEFT JOIN skills s ON n.skill_id = s.id
+            ORDER BY n.id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $names = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
@@ -162,7 +166,23 @@ try {
             border-left: 4px solid #28a745;
         }
 
-        /* Кнопка добавления в правом нижнем углу */
+        .edit-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .edit-btn:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
         .add-button {
             position: fixed;
             bottom: 30px;
@@ -211,9 +231,9 @@ try {
     <div class="container">
         <div class="header">
             <div class="nav-buttons">
-    <a href="index.php" class="nav-btn active">Игровой Персонаж</a>
-    <a href="dangers.php" class="nav-btn">Уровни опасности</a>
-    <a href="positions.php" class="nav-btn">Должности</a>
+                <a href="index.php" class="nav-btn active">Игровой Персонаж</a>
+                <a href="dangers.php" class="nav-btn">Уровни опасности</a>
+                <a href="positions.php" class="nav-btn">Должности</a>
             </div>
             <h1>РАЗЫСКИВАЮТСЯ</h1>
             <p>Список персонажей и их уровни опасности CRMP проектов</p>
@@ -230,20 +250,27 @@ try {
                 <table>
                     <thead>
                         <tr>
-                            <?php 
-                            $firstRow = $names[0];
-                            foreach (array_keys($firstRow) as $column): 
-                            ?>
-                                <th><?php echo htmlspecialchars($column); ?></th>
-                            <?php endforeach; ?>
+                            <th>ID</th>
+                            <th>Имя персонажа</th>
+                            <th>Псевдоним</th>
+                            <th>Дата обнаружения</th>
+                            <th>Уровень опасности</th>
+                            <th>Навык</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($names as $row): ?>
                             <tr>
-                                <?php foreach ($row as $value): ?>
-                                    <td><?php echo htmlspecialchars($value ?? '—'); ?></td>
-                                <?php endforeach; ?>
+                                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                <td><?php echo htmlspecialchars($row['object_name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['alias'] ?? '—'); ?></td>
+                                <td><?php echo htmlspecialchars($row['discovery_date'] ?? '—'); ?></td>
+                                <td><?php echo htmlspecialchars($row['danger_name'] ?? '—'); ?></td>
+                                <td><?php echo htmlspecialchars($row['skill_name'] ?? '—'); ?></td>
+                                <td>
+                                    <a href="editor.php?id=<?php echo $row['id']; ?>" class="edit-btn">Редактировать</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -256,19 +283,16 @@ try {
         </div>
 
         <div class="footer">
-            
+            <!-- футер -->
         </div>
     </div>
 
-    <!-- Кнопка добавления в правом нижнем углу -->
-    
+    <div style="margin-bottom: 20px; text-align: center; margin-top: 20px;">
+        <a href="add_person.php" class="nav-btn" style="background: #27ae60; display: inline-block;">Добавить персонажа</a>
+    </div>
 
-
-    <a href = "https://vk.ru/video-155939640_456239467?access_key=35e4816f64ec80e260">✓Если вы обнаружили новый тип опасности     <p>Свяжитесь с нами: 392e96alr0t@emailax.pro</p></a>
-    <div style="margin-bottom: 20px;">
-<a href="add_person.php" class="nav-btn">Добавить персонажа</a>
-
-
-</div> 
-</html>
+    <a href="https://vk.ru/video-155939640_456239467?access_key=35e4816f64ec80e260" style="display: block; text-align: center; margin-top: 20px; color: #cab27d; text-decoration: none;">
+        Если вы обнаружили новый тип опасности | Свяжитесь с нами: 392e96alr0t@emailax.pro
+    </a>
 </body>
+</html>
