@@ -183,7 +183,7 @@ $skills = $pdo->query("SELECT id, skill_name FROM skills ORDER BY id")->fetchAll
     <div class="container">
         <div class="header">
             <h1>Редактирование персонажа</h1>
-            <p>Измените данные и сохраните</p>
+
         </div>
 
         <div class="form-container">
@@ -235,15 +235,9 @@ $skills = $pdo->query("SELECT id, skill_name FROM skills ORDER BY id")->fetchAll
                 </div>
 
                 <div class="buttons">
-                    <button type="submit" name="save" class="btn-save">Сохранить</button>
-                    <a href="index.php" class="btn-cancel">Отмена</a>
+                    <button type="submit" name="save" class="nav-btn">СОХРАНИТЬ</button>
+                    
                 </div>
             </form>
-        </div>
-
-        <div class="footer">
-            Кунсткамера - система учета персонажей
-        </div>
-    </div>
 </body>
 </html>

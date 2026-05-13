@@ -82,15 +82,16 @@ try {
 
         .nav-btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 6px 12px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 12px;
         }
 
         .nav-btn:hover {
@@ -103,6 +104,14 @@ try {
             background: rgba(255, 255, 255, 0.3);
             border: 1px solid white;
             cursor: default;
+        }
+
+        .edit-nav-btn {
+            color: #000000 !important;
+        }
+
+        .edit-nav-btn:hover {
+            color: #000000 !important;
         }
 
         .table-container {
@@ -166,47 +175,6 @@ try {
             border-left: 4px solid #28a745;
         }
 
-        .edit-btn {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .edit-btn:hover {
-            background: #2980b9;
-            transform: translateY(-1px);
-        }
-
-        .add-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #27ae60;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            border: none;
-            cursor: pointer;
-        }
-
-        .add-button:hover {
-            background: #219a52;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
         @media (max-width: 768px) {
             .nav-buttons {
                 position: static;
@@ -216,13 +184,6 @@ try {
             
             .header {
                 padding-bottom: 20px;
-            }
-
-            .add-button {
-                padding: 12px 24px;
-                font-size: 1rem;
-                bottom: 20px;
-                right: 20px;
             }
         }
     </style>
@@ -269,7 +230,7 @@ try {
                                 <td><?php echo htmlspecialchars($row['danger_name'] ?? '—'); ?></td>
                                 <td><?php echo htmlspecialchars($row['skill_name'] ?? '—'); ?></td>
                                 <td>
-                                    <a href="editor.php?id=<?php echo $row['id']; ?>" class="edit-btn">Редактировать</a>
+                                    <a href="editor.php?id=<?php echo $row['id']; ?>" class="nav-btn edit-nav-btn">Редактировать</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -288,10 +249,10 @@ try {
     </div>
 
     <div style="margin-bottom: 20px; text-align: center; margin-top: 20px;">
-        <a href="add_person.php" class="nav-btn" style="background: #27ae60; display: inline-block;">Добавить персонажа</a>
+        <a href="add_person.php" class="nav-btn">Добавить персонажа</a>
     </div>
 
-    <a href="https://vk.ru/video-155939640_456239467?access_key=35e4816f64ec80e260" style="display: block; text-align: center; margin-top: 20px; color: #cab27d; text-decoration: none;">
+    <a href="https://vk.ru/video-155939640_456239467?access_key=35e4816f64ec80e260" style="display: block; text-align: center; margin-top: 20px; color: #e1e1e4; text-decoration: none;">
         Если вы обнаружили новый тип опасности | Свяжитесь с нами: 392e96alr0t@emailax.pro
     </a>
 </body>
