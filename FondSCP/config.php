@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'кунтскамера';
+$dbname = 'Кунтскамера';
 $username = 'root';
 $password = '';
 

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $object_name = trim($_POST['object_name'] ?? '');
     $alias = trim($_POST['alias'] ?? '');
     $discovery_date = trim($_POST['discovery_date'] ?? '');
-    $descriptions = trim($_POST['description'] ?? '');
+    $descriptions = trim($_POST['description'] ?? '');  // Получаем из формы description
     
     if (empty($object_name)) {
         $error = "Имя объекта обязательно";
@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':discovery_date' => $discovery_date,
                 ':descriptions' => $descriptions
             ]);
-            // $success = "Персонаж успешно добавлен";
+            $success = "Персонаж успешно добавлен";
             
-            $object_name = $alias = $discovery_date = $description = '';
+            $object_name = $alias = $discovery_date = $descriptions = '';
             
         } catch (PDOException $e) {
             if ($e->errorInfo[1] == 1062) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Добавление персонажа</title>
     <style>
         * {
             margin: 0;
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             min-height: 100px;
         }
 
-        .btn-submit {
+        .custom-btn {
             background: #27ae60;
             color: white;
             border: none;
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
         }
 
-        .btn-submit:hover {
+        .custom-btn:hover {
             background: #219a52;
         }
 
@@ -204,6 +204,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #7f8c8d;
             margin-top: 5px;
         }
+
+        .btn-16 {
+            background: linear-gradient(135deg, #cab27d 0%, #36230a 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-16:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -212,8 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="nav-buttons">
                 <a href="index.php" class="nav-btn">НАЗАД</a>
             </div>
-            
-            
+            <h1>Добавление нового персонажа</h1>
         </div>
 
         <div class="form-container">
@@ -243,28 +259,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="discovery_date">Дата</label>
+                    <label for="discovery_date">Дата обнаружения</label>
                     <input type="text" id="discovery_date" name="discovery_date" 
                         value="<?php echo htmlspecialchars($discovery_date ?? ''); ?>" 
                         placeholder="например: 2024-12-25"
                         required>
-                    <!-- <div class="hint">Формат: ГГГГ-ММ-ДД (например: 2024-12-25)</div> -->
                 </div>
 
                 <div class="form-group">
                     <label for="description">Уровень опасности</label>
-                    <textarea id="description" name="descriptions"><?php echo htmlspecialchars($descriptions ?? ''); ?></textarea>
+                    <textarea id="description" name="description" placeholder="Опишите уровень опасности персонажа..."><?php echo htmlspecialchars($descriptions ?? ''); ?></textarea>
                 </div>
 
-                <button class="custom-btn btn-16">ДОБАВИТЬ</button>
+                <button type="submit" name="save" class="nav-btn">ДОБАВИТЬ</button>
+                
             </form>
-
-            
         </div>
 
-        <div class="footer">
-            
-        </div>
+
     </div>
 </body>
 </html>
