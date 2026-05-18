@@ -1,12 +1,12 @@
-[______________________ (2).sql](https://github.com/user-attachments/files/27623122/______________________.2.sql)
+[______________________.sql](https://github.com/user-attachments/files/27968647/______________________.sql)
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 12 2026 г., 09:11
--- Версия сервера: 5.7.39
--- Версия PHP: 8.1.9
+-- Время создания: Май 18 2026 г., 19:57
+-- Версия сервера: 10.4.26-MariaDB
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `Кунтскамера`
+-- База данных: `кунтскамера`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `dangers` (
   `id` int(11) NOT NULL,
   `class_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -100,9 +100,9 @@ INSERT INTO `positions` (`id`, `position`, `description`) VALUES
 CREATE TABLE `skills` (
   `id` int(11) NOT NULL,
   `skill_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `effect_description` text COLLATE utf8mb4_unicode_ci,
-  `activation_conditions` text COLLATE utf8mb4_unicode_ci,
-  `countermeasures` text COLLATE utf8mb4_unicode_ci
+  `effect_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activation_conditions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `countermeasures` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -117,6 +117,27 @@ INSERT INTO `skills` (`id`, `skill_name`, `effect_description`, `activation_cond
 (5, 'угрозы и хулиганство', 'у него нет разума но есть сила', 'до первой заявы и пожизненного срока', 'попробуйте написать заявление в полицию'),
 (6, 'зависимость', 'такое нельзя обсуждать', 'на протяжении всей жизни', 'рехаб может помочь (это не толчная инфомация)'),
 (7, 'борьба с преступностью', 'уничтожает плохих парней', 'с момента его рождения', 'против него могут бать только лютые оффники');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`) VALUES
+(1, 'root', 'arncetov@gmail.com', '$2y$10$iOkXVM5U576Z2MxcPi6vA.Gu.ace8qB1lqBotr8OFDNmxggG.uu2a', '2026-05-18 14:43:53');
 
 --
 -- Индексы сохранённых таблиц
@@ -147,6 +168,24 @@ ALTER TABLE `positions`
 --
 ALTER TABLE `skills`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
