@@ -1,5 +1,5 @@
 <?php
-
+require_once 'check_auth.php';
 require_once 'config.php';
         
 $names = [];
@@ -195,6 +195,7 @@ try {
                 <a href="index.php" class="nav-btn active">Игровой Персонаж</a>
                 <a href="dangers.php" class="nav-btn">Уровни опасности</a>
                 <a href="positions.php" class="nav-btn">Должности</a>
+                <a href="logout.php" class="nav-btn">Выйти</a>
             </div>
             <h1>РАЗЫСКИВАЮТСЯ</h1>
             <p>Список персонажей и их уровни опасности CRMP проектов</p>
@@ -230,6 +231,7 @@ try {
                                 <td><?php echo htmlspecialchars($row['danger_name'] ?? '—'); ?></td>
                                 <td><?php echo htmlspecialchars($row['skill_name'] ?? '—'); ?></td>
                                 <td>
+                                    <a href="view.php?id=<?php echo $row['id']; ?>" class="nav-btn edit-nav-btn">Просмотр</a>
                                     <a href="editor.php?id=<?php echo $row['id']; ?>" class="nav-btn edit-nav-btn">Редактировать</a>
                                 </td>
                             </tr>

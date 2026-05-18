@@ -1,5 +1,7 @@
 <?php
+require_once 'check_auth.php';
 require_once 'config.php';
+
 
 // Получаем ID персонажа из URL
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

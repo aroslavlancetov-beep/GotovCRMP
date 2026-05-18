@@ -1,4 +1,5 @@
 <?php
+require_once 'check_auth.php';
 // dangers.php
 require_once 'config.php';
 
